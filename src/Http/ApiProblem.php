@@ -9,6 +9,10 @@ use ReflectionProperty;
 use Solido\ApiProblem\ApiProblemInterface;
 use Symfony\Component\HttpFoundation\Response;
 
+use function is_object;
+use function is_scalar;
+use function method_exists;
+
 class ApiProblem implements ApiProblemInterface
 {
     public const TYPE_HTTP_RFC = 'http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html';
@@ -28,7 +32,13 @@ class ApiProblem implements ApiProblemInterface
     {
         $this->status = $statusCode;
         $this->title = $data['title'] ?? Response::$statusTexts[$statusCode] ?? 'Unknown';
-        $this->detail = $data['detail'] ?? '';
+
+        $detail = $data['detail'] ?? '';
+        if (is_scalar($detail) || (is_object($detail) && method_exists($detail, '__toString'))) {
+            $this->detail = (string) $detail;
+        } else {
+            $this->detail = '';
+        }
 
         unset($data['status'], $data['type'], $data['title'], $data['detail']);
         $this->data = $data;

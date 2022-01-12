@@ -70,6 +70,31 @@ class SerializableFormTest extends TestCase
         $formConfigBuilder->setDataMapper($this->prophesize(DataMapperInterface::class)->reveal());
         $fooConfig = $formConfigBuilder->getFormConfig();
 
+        $error = new FormError('This is the form error', 'This is the error template', ['{{ value }}' => 'invalid'], 2);
+
+        $form = new Form($fooConfig);
+        $form->addError($error);
+
+        $translator = $this->prophesize(TranslatorInterface::class);
+        $translator->trans('This is the error template', ['%count%' => 2, '{{ value }}' => 'invalid'], 'validators')->willReturn('Form error');
+
+        $serializable = new SerializableForm($form, $translator->reveal());
+        self::assertEquals([
+            'name' => 'foo',
+            'errors' => ['Form error'],
+            'children' => [],
+        ], $serializable->toArray());
+    }
+
+    public function testShouldWorkWithATranslatorInstance(): void
+    {
+        $dispatcher = $this->prophesize(EventDispatcherInterface::class);
+
+        $formConfigBuilder = new FormConfigBuilder('foo', null, $dispatcher->reveal());
+        $formConfigBuilder->setCompound(true);
+        $formConfigBuilder->setDataMapper($this->prophesize(DataMapperInterface::class)->reveal());
+        $fooConfig = $formConfigBuilder->getFormConfig();
+
         $form = new Form($fooConfig);
         $form->addError(new FormError('This is the form error'));
 

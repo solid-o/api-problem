@@ -43,16 +43,33 @@ class ApiProblemTest extends TestCase
         ], $problem->jsonSerialize());
     }
 
-    public function testDefinedDetails(): void
+    /**
+     * @dataProvider provideDetails
+     */
+    public function testDefinedDetails($expected, $detail): void
     {
-        $problem = new ApiProblem(100, ['detail' => 'Foo example details']);
+        $problem = new ApiProblem(100, ['detail' => $detail]);
 
         self::assertEquals([
             'status' => 100,
             'type' => 'http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html',
             'title' => 'Continue',
-            'detail' => 'Foo example details',
+            'detail' => $expected,
         ], $problem->jsonSerialize());
+    }
+
+    public function provideDetails(): iterable
+    {
+        yield ['', null];
+        yield ['Foo example details', 'Foo example details'];
+        yield ['42', 42];
+        yield ['Example from object', new class {
+            public function __toString(): string
+            {
+                return 'Example from object';
+            }
+        }];
+        yield ['', fopen('php://temp', 'rb')];
     }
 
     public function testDefinedDetailsAndExtraFields(): void
