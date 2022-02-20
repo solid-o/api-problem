@@ -5,7 +5,11 @@
         ]
     },
     "logs": {
-        "text": "infection\/infection.log"
+        "stryker": {
+            "badge": "master"
+        },
+        "text": "infection\/infection.log",
+        "html": "infection\/infection.html"
     },
     "mutators": {
         "global-ignoreSourceCodeByRegex": [
