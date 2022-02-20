@@ -7,6 +7,8 @@ namespace Solido\ApiProblem\Tests\Http;
 use PHPUnit\Framework\TestCase;
 use Solido\ApiProblem\Http\ApiProblem;
 
+use function fopen;
+
 class ApiProblemTest extends TestCase
 {
     public function testDefaultTitleAndDetails(): void
@@ -63,12 +65,16 @@ class ApiProblemTest extends TestCase
         yield ['', null];
         yield ['Foo example details', 'Foo example details'];
         yield ['42', 42];
-        yield ['Example from object', new class {
-            public function __toString(): string
-            {
-                return 'Example from object';
-            }
-        }];
+        yield [
+            'Example from object',
+            new class {
+                public function __toString(): string
+                {
+                    return 'Example from object';
+                }
+            },
+        ];
+
         yield ['', fopen('php://temp', 'rb')];
     }
 

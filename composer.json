@@ -28,9 +28,8 @@
         "phpspec/prophecy-phpunit": "^2.0",
         "phpunit/phpunit": "^9.4",
         "roave/security-advisories": "dev-master",
-        "solido/php-coding-standards": "dev-master",
-        "symfony/form": "^4.4 || ^5.0 || ^6.0",
-        "symfony/translation": "^4.4 || ^5.0 || ^6.0"
+        "solido/data-mapper": "^0.3.0",
+        "solido/php-coding-standards": "dev-master"
     },
     "autoload": {
         "psr-4": {
