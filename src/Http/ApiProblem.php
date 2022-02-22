@@ -7,6 +7,7 @@ namespace Solido\ApiProblem\Http;
 use ReflectionClass;
 use ReflectionProperty;
 use Solido\ApiProblem\ApiProblemInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 use function is_object;
@@ -42,6 +43,11 @@ class ApiProblem implements ApiProblemInterface
 
         unset($data['status'], $data['type'], $data['title'], $data['detail']);
         $this->data = $data;
+    }
+
+    public function toResponse(): Response
+    {
+        return new JsonResponse($this->jsonSerialize(), $this->status, ['Content-Type' => 'application/problem+json']);
     }
 
     /**
