@@ -17,9 +17,7 @@ class MethodNotAllowed extends ApiProblem
         parent::__construct(Response::HTTP_METHOD_NOT_ALLOWED, ['detail' => $detail]);
     }
 
-    /**
-     * @param string[] $allowMethods
-     */
+    /** @param string[] $allowMethods */
     public static function invalidMethod(array $allowMethods, string $currentMethod): self
     {
         $allowMethods[] = implode(' or ', array_splice($allowMethods, -2));

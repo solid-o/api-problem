@@ -28,9 +28,7 @@ class UnsupportedMediaType extends ApiProblem
         return new self(sprintf('None of the passed encodings ("%s") are allowed. Should contain at least one of: "%s"', implode('", "', $providedEncodings), implode('", "', $allowedEncodings)));
     }
 
-    /**
-     * @param string[] $allowedTypes
-     */
+    /** @param string[] $allowedTypes */
     public static function invalidContentType(array $allowedTypes, string $providedType): self
     {
         $allowedTypes[] = implode('" and "', array_splice($allowedTypes, -2));

@@ -23,13 +23,8 @@ class ApiProblem implements ApiProblemInterface
     public string $title;
     public string $detail;
 
-    /** @var array<string, mixed> */
-    private array $data;
-
-    /**
-     * @param array<string, mixed> $data
-     */
-    public function __construct(int $statusCode, array $data = [])
+    /** @param array<string, mixed> $data */
+    public function __construct(int $statusCode, private array $data = [])
     {
         $this->status = $statusCode;
         $this->title = $data['title'] ?? Response::$statusTexts[$statusCode] ?? 'Unknown';
@@ -42,7 +37,6 @@ class ApiProblem implements ApiProblemInterface
         }
 
         unset($data['status'], $data['type'], $data['title'], $data['detail']);
-        $this->data = $data;
     }
 
     public function toResponse(): Response
@@ -50,9 +44,7 @@ class ApiProblem implements ApiProblemInterface
         return new JsonResponse($this->jsonSerialize(), $this->status, ['Content-Type' => 'application/problem+json']);
     }
 
-    /**
-     * @return array<string, mixed>
-     */
+    /** @return array<string, mixed> */
     public function jsonSerialize(): array
     {
         $reflection = new ReflectionClass($this);
