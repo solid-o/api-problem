@@ -15,9 +15,10 @@ class MethodNotAllowedTest extends TestCase
 
         self::assertEquals([
             'status' => 405,
-            'type' => 'http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html',
+            'type' => 'https://solid-o.io/api-problem/method-not-allowed.html',
             'title' => 'Method Not Allowed',
             'detail' => 'detail',
+            'instance' => null,
         ], $problem->jsonSerialize());
     }
 
@@ -27,9 +28,10 @@ class MethodNotAllowedTest extends TestCase
 
         self::assertEquals([
             'status' => 405,
-            'type' => 'http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html',
+            'type' => 'https://solid-o.io/api-problem/method-not-allowed.html',
             'title' => 'Method Not Allowed',
             'detail' => 'PATCH not allowed. Should be: GET, POST or PUT',
+            'instance' => null,
         ], $problem->jsonSerialize());
     }
 }

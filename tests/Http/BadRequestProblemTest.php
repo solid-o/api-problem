@@ -15,9 +15,10 @@ class BadRequestProblemTest extends TestCase
 
         self::assertEquals([
             'status' => 400,
-            'type' => 'http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html',
+            'type' => 'https://solid-o.io/api-problem/bad-request.html',
             'title' => 'Bad Request',
             'detail' => 'bad request detail',
+            'instance' => null,
         ], $problem->jsonSerialize());
     }
 }

@@ -41,6 +41,7 @@ class DataInvalidProblemTest extends TestCase
                 'errors' => ['This is the form error'],
                 'children' => [],
             ],
+            'instance' => null,
         ], $problem->jsonSerialize());
     }
 }

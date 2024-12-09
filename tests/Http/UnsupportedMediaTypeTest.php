@@ -15,9 +15,10 @@ class UnsupportedMediaTypeTest extends TestCase
 
         self::assertEquals([
             'status' => 415,
-            'type' => 'http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html',
+            'type' => 'https://solid-o.io/api-problem/unsupported-media-type.html',
             'title' => 'Unsupported Media Type',
             'detail' => 'detail',
+            'instance' => null,
         ], $problem->jsonSerialize());
     }
 
@@ -27,9 +28,10 @@ class UnsupportedMediaTypeTest extends TestCase
 
         self::assertEquals([
             'status' => 415,
-            'type' => 'http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html',
+            'type' => 'https://solid-o.io/api-problem/unsupported-media-type.html',
             'title' => 'Unsupported Media Type',
             'detail' => '"form/multipart-data" is not supported. Supported content types are: "application/json", "application/xml" and "application/x-www-form-urlencoded"',
+            'instance' => null,
         ], $problem->jsonSerialize());
     }
 
@@ -39,9 +41,10 @@ class UnsupportedMediaTypeTest extends TestCase
 
         self::assertEquals([
             'status' => 415,
-            'type' => 'http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html',
+            'type' => 'https://solid-o.io/api-problem/unsupported-media-type.html',
             'title' => 'Unsupported Media Type',
             'detail' => 'None of the passed encodings ("text/plain", "text/html" and "application/yaml") are allowed. Should contain at least one of: "application/json", "application/xml"',
+            'instance' => null,
         ], $problem->jsonSerialize());
     }
 }

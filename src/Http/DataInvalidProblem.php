@@ -14,7 +14,6 @@ class DataInvalidProblem extends ApiProblem
 
     /** @var array<string, mixed> */
     public array $errors = [];
-    public string $type = self::TYPE_FORM_INVALID;
 
     public function __construct(MappingResultInterface $mappingResult)
     {
@@ -22,5 +21,6 @@ class DataInvalidProblem extends ApiProblem
 
         $serializableForm = new SerializableMappingResult($mappingResult);
         $this->errors = $serializableForm->toArray();
+        $this->type = self::TYPE_FORM_INVALID;
     }
 }

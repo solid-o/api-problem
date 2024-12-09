@@ -13,12 +13,13 @@ class ApiProblemTest extends TestCase
 {
     public function testDefaultTitleAndDetails(): void
     {
-        $problem = new ApiProblem(500);
+        $problem = new ApiProblem(500, ['instance' => '/test']);
         self::assertEquals([
             'status' => 500,
-            'type' => 'http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html',
+            'type' => 'https://solid-o.io/api-problem/internal-server-error.html',
             'title' => 'Internal Server Error',
             'detail' => '',
+            'instance' => '/test',
         ], $problem->jsonSerialize());
     }
 
@@ -30,6 +31,7 @@ class ApiProblemTest extends TestCase
             'type' => 'http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html',
             'title' => 'Unknown',
             'detail' => '',
+            'instance' => null,
         ], $problem->jsonSerialize());
     }
 
@@ -42,6 +44,7 @@ class ApiProblemTest extends TestCase
             'type' => 'http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html',
             'title' => 'All good',
             'detail' => '',
+            'instance' => null,
         ], $problem->jsonSerialize());
     }
 
@@ -54,9 +57,10 @@ class ApiProblemTest extends TestCase
 
         self::assertEquals([
             'status' => 100,
-            'type' => 'http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html',
+            'type' => 'https://solid-o.io/api-problem/continue.html',
             'title' => 'Continue',
             'detail' => $expected,
+            'instance' => null,
         ], $problem->jsonSerialize());
     }
 
@@ -87,10 +91,11 @@ class ApiProblemTest extends TestCase
 
         self::assertEquals([
             'status' => 301,
-            'type' => 'http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html',
+            'type' => 'https://solid-o.io/api-problem/moved-permanently.html',
             'title' => 'Moved Permanently',
             'detail' => 'Foo example details',
             'extra_field' => 'This is extra',
+            'instance' => null,
         ], $problem->jsonSerialize());
     }
 }

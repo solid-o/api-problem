@@ -12,22 +12,34 @@ use Symfony\Component\HttpFoundation\Response;
 
 use function is_object;
 use function is_scalar;
+use function is_string;
 use function method_exists;
+use function preg_replace;
+use function sprintf;
+use function strtolower;
+use function trim;
 
 class ApiProblem implements ApiProblemInterface
 {
     public const TYPE_HTTP_RFC = 'http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html';
+    private const TYPE_REF = 'https://solid-o.io/api-problem/%s.html';
 
     public int $status;
-    public string $type = self::TYPE_HTTP_RFC;
+    public string $type;
     public string $title;
     public string $detail;
+    public string|null $instance;
 
     /** @param array<string, mixed> $data */
     public function __construct(int $statusCode, private array $data = [])
     {
+        $title = $data['title'] ?? Response::$statusTexts[$statusCode] ?? null;
         $this->status = $statusCode;
-        $this->title = $data['title'] ?? Response::$statusTexts[$statusCode] ?? 'Unknown';
+        $this->title = $title ?? 'Unknown';
+        $this->type = $data['type'] ?? isset($data['title']) || ! isset($title) ? self::TYPE_HTTP_RFC : sprintf(
+            self::TYPE_REF,
+            strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $title))),
+        );
 
         $detail = $data['detail'] ?? '';
         if (is_scalar($detail) || (is_object($detail) && method_exists($detail, '__toString'))) {
@@ -36,7 +48,8 @@ class ApiProblem implements ApiProblemInterface
             $this->detail = '';
         }
 
-        unset($data['status'], $data['type'], $data['title'], $data['detail']);
+        $this->instance = isset($data['instance']) && is_string($data['instance']) ? $data['instance'] : null;
+        unset($this->data['status'], $this->data['type'], $this->data['title'], $this->data['detail'], $this->data['instance']);
     }
 
     public function toResponse(): Response
@@ -50,11 +63,7 @@ class ApiProblem implements ApiProblemInterface
         $reflection = new ReflectionClass($this);
         $properties = $reflection->getProperties(ReflectionProperty::IS_PUBLIC);
 
-        $result = [];
-        foreach ($this->data as $key => $value) {
-            $result[$key] = $value;
-        }
-
+        $result = $this->data;
         foreach ($properties as $property) {
             $result[$property->getName()] = $property->getValue($this);
         }
