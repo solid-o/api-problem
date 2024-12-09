@@ -23,6 +23,18 @@ class ApiProblemTest extends TestCase
         ], $problem->jsonSerialize());
     }
 
+    public function testCustomType(): void
+    {
+        $problem = new ApiProblem(408, ['type' => 'https://solid-o.test/api-problem/test.html']);
+        self::assertEquals([
+            'status' => 408,
+            'type' => 'https://solid-o.test/api-problem/test.html',
+            'title' => 'Request Timeout',
+            'detail' => '',
+            'instance' => null,
+        ], $problem->jsonSerialize());
+    }
+
     public function testDefaultTitleAndDetailsWithNonStandardStatusCode(): void
     {
         $problem = new ApiProblem(599);

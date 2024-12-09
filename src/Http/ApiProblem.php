@@ -36,10 +36,10 @@ class ApiProblem implements ApiProblemInterface
         $title = $data['title'] ?? Response::$statusTexts[$statusCode] ?? null;
         $this->status = $statusCode;
         $this->title = $title ?? 'Unknown';
-        $this->type = $data['type'] ?? isset($data['title']) || ! isset($title) ? self::TYPE_HTTP_RFC : sprintf(
+        $this->type = $data['type'] ?? (isset($data['title']) || ! isset($title) ? self::TYPE_HTTP_RFC : sprintf(
             self::TYPE_REF,
             strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $title))),
-        );
+        ));
 
         $detail = $data['detail'] ?? '';
         if (is_scalar($detail) || (is_object($detail) && method_exists($detail, '__toString'))) {
