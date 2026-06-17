@@ -21,8 +21,8 @@ use function trim;
 
 class ApiProblem implements ApiProblemInterface
 {
-    public const TYPE_HTTP_RFC = 'http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html';
-    private const TYPE_REF = 'https://solid-o.io/api-problem/%s.html';
+    public const string TYPE_HTTP_RFC = 'http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html';
+    private const string TYPE_REF = 'https://solid-o.io/api-problem/%s.html';
 
     public int $status;
     public string $type;

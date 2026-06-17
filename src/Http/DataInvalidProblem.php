@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class DataInvalidProblem extends ApiProblem
 {
-    public const TYPE_FORM_INVALID = 'https://solid-o.io/api-problem/invalid-data.html';
+    public const string TYPE_FORM_INVALID = 'https://solid-o.io/api-problem/invalid-data.html';
 
     /** @var array<string, mixed> */
     public array $errors = [];
