@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Solido\ApiProblem\Tests\Http;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Solido\ApiProblem\Http\ApiProblem;
 
@@ -60,9 +61,7 @@ class ApiProblemTest extends TestCase
         ], $problem->jsonSerialize());
     }
 
-    /**
-     * @dataProvider provideDetails
-     */
+    #[DataProvider('provideDetails')]
     public function testDefinedDetails($expected, $detail): void
     {
         $problem = new ApiProblem(100, ['detail' => $detail]);
@@ -76,7 +75,7 @@ class ApiProblemTest extends TestCase
         ], $problem->jsonSerialize());
     }
 
-    public function provideDetails(): iterable
+    public static function provideDetails(): iterable
     {
         yield ['', null];
         yield ['Foo example details', 'Foo example details'];

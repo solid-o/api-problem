@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 use function array_splice;
 use function implode;
-use function Safe\sprintf;
+use function sprintf;
 
 class UnsupportedMediaType extends ApiProblem
 {

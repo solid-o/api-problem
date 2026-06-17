@@ -34,11 +34,14 @@ class ApiProblem implements ApiProblemInterface
     public function __construct(int $statusCode, private array $data = [])
     {
         $title = $data['title'] ?? Response::$statusTexts[$statusCode] ?? null;
+        $title = is_scalar($title) || (is_object($title) && method_exists($title, '__toString')) ? (string) $title : null;
+        $type = $data['type'] ?? null;
         $this->status = $statusCode;
         $this->title = $title ?? 'Unknown';
-        $this->type = $data['type'] ?? (isset($data['title']) || ! isset($title) ? self::TYPE_HTTP_RFC : sprintf(
+        $slug = $title !== null ? preg_replace('/[^A-Za-z0-9-]+/', '-', $title) : null;
+        $this->type = is_string($type) ? $type : (isset($data['title']) || ! isset($title) ? self::TYPE_HTTP_RFC : sprintf(
             self::TYPE_REF,
-            strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $title))),
+            strtolower(trim($slug ?? $title)),
         ));
 
         $detail = $data['detail'] ?? '';

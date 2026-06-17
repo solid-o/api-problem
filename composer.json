@@ -20,15 +20,15 @@
         "csfix": "vendor/bin/phpcbf --standard=Solido src/"
     },
     "require": {
-        "php": "^8.1",
+        "php": "^8.4",
         "ext-json": "*",
-        "symfony/http-foundation": "^5.4 || ^6.0 || ^7.0"
+        "symfony/http-foundation": "^7.4 || ^8.0"
     },
     "require-dev": {
         "phpspec/prophecy-phpunit": "^2.0",
-        "phpunit/phpunit": "^9.4",
+        "phpunit/phpunit": "^11.0 || ^12.0",
         "roave/security-advisories": "dev-master",
-        "solido/data-mapper": "^0.4.0",
+        "solido/data-mapper": "^0.4 || ^0.5",
         "solido/php-coding-standards": "dev-master"
     },
     "autoload": {
@@ -53,7 +53,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "0.4.x-dev"
+            "dev-master": "0.5.x-dev"
         }
     }
 }
